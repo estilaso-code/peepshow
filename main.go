@@ -19,12 +19,15 @@ func greetUser() {
 `, "Welcome to the show! Lets peep some passwords.\n")
 }
 
-func passStrength() (string, error) {
-	complexity, err := goinput.Input("How hard do you want this password?\nType 1 for: So good and hard\nType 2 for: Kinda mid\nType 3 for: FLacid like your dick!\n")
+var complexity string
+
+func passStrength() error {
+	input, err := goinput.Input("How hard do you want this password?\nType 1 for: So good and hard\nType 2 for: Kinda mid\nType 3 for: FLacid like your dick!\n")
 	if err != nil {
-		return "", fmt.Errorf("User can't follow instructions: %w", err)
+		return fmt.Errorf("User can't follow instructions: %w", err)
 	}
-	return complexity, nil
+	complexity = input
+	return nil
 }
 
 func complexityChoice(complexity string) {
@@ -43,10 +46,6 @@ func complexityChoice(complexity string) {
 
 func main() {
 	greetUser()
-	complexity, err := passStrength()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
+	passStrength()
 	complexityChoice(complexity)
 }
